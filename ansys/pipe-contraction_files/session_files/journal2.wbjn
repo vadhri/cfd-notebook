@@ -1,0 +1,44 @@
+# encoding: utf-8
+# 2025 R2
+SetScriptVersion(Version="25.2.172")
+system1 = GetSystem(Name="FFF")
+results1 = system1.GetContainer(ComponentName="Results")
+results1.Edit()
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 2.9162e-06, -7.43428e-07, 0.007425
+    Scale = 46.8946
+    Pan = 0, 0
+    Rotation Quaternion = 0.279848, -0.364705, -0.115917, 0.880476
+    
+  END
+
+END
+
+> update
+# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case FFF/BOUNDARY:inlet, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case FFF/BOUNDARY:outlet, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case FFF/BOUNDARY:pipe, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case FFF/BOUNDARY:solid 1, view=/VIEW:View 1""")
+results1.SendCommand(Command="> autolegend plot=/DEFAULT LEGEND:Default Legend View 1, view=VIEW:View 1")
+results1.Exit()
+solution1 = system1.GetContainer(ComponentName="Solution")
+solution1.Edit()
+setup1 = system1.GetContainer(ComponentName="Setup")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-tab-index "NavigationPane*Frame1(TreeTab)" 0)(cx-gui-do cx-activate-tab-index "NavigationPane*Frame1(TreeTab)" 1)')
+setup1.SendCommand(Command="""/file/set-tui-version \"25.2\"
+Graphics driver currently in use: dx11""")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "ToolBar*Copy*savepicture")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Save Picture*PanelButtons*PushButton4(Preview)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Preview*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Save Picture*PanelButtons*PushButton5(Apply)")')
+setup1.SendCommand(Command="(cx-gui-do cx-activate-item \"Save Picture*PanelButtons*PushButton1(OK)\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"C:/Users/vratnam/Documents/pipe-contraction.png\") \"Hardcopy Files (*.png)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Save Picture*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame5(Solution)*Table1*Table3(Run Calculation)*PushButton8(Calculate)")')
+Save(Overwrite=True)

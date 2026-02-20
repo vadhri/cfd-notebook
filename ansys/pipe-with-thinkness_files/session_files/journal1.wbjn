@@ -1,0 +1,225 @@
+# encoding: utf-8
+# 2025 R2
+SetScriptVersion(Version="25.2.172")
+template1 = GetTemplate(TemplateName="Fluid Flow with Fluent Meshing")
+system1 = template1.CreateSystem()
+geometry1 = system1.GetContainer(ComponentName="Geometry")
+geometry1.Edit(IsDiscoveryGeometry=True)
+geometry1.Edit(IsDiscoveryGeometry=True)
+geometry1.Exit()
+setup1 = system1.GetContainer(ComponentName="Setup")
+fluentLauncherSettings1 = setup1.GetFluentLauncherSettings()
+fluentLauncherSettings1.SetEntityProperties(Properties=Set(EnvPath={}, RunParallel=True, NumberOfProcessorsMeshing=4, NumberOfProcessors=4))
+tGridData1 = GetDataEntity("/Mesh/TGridData:TGridData")
+tGridData1.SetEntityProperties(Properties=Set(RunParallel=True, NumberOfProcs=4))
+mesh1 = system1.GetContainer(ComponentName="Mesh")
+Fluent.Edit(Container=mesh1)
+setup1.SendCommand(Command='(cx-gui-do cx-activate-tab-index "NavigationPane*Frame1(TreeTab)" 0)(cx-gui-do cx-activate-tab-index "NavigationPane*Frame1(TreeTab)" 1)')
+meshComponent1 = system1.GetComponent(Name="Mesh")
+meshComponent1.Refresh()
+setup1.SendCommand(Command="""/file/set-tui-version \"25.2\"
+Graphics driver currently in use: dx11
+(cx-gui-do cx-activate-tab-index \"NavigationPane*Frame1(TreeTab)\" 0)""")
+setup1.SendCommand(Command="(%py-exec \"meshing.GlobalSettings.LengthUnit.set_state(r'm')\")")
+setup1.SendCommand(Command="(%py-exec \"meshing.GlobalSettings.AreaUnit.set_state(r'm^2')\")")
+setup1.SendCommand(Command="(%py-exec \"meshing.GlobalSettings.VolumeUnit.set_state(r'm^3')\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Import Geometry'].Execute()\")")
+setup1.SendCommand(Command="(newline)")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].AddChildAndUpdate(DeferUpdate=False)\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Generate the Surface Mesh'].Arguments.set_state({r'CFDSurfaceMeshControls': {r'CurvatureNormalAngle': 45,r'MaxSize': 0.0005,r'MinSize': 0.0001,},})\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Generate the Surface Mesh'].Execute()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Describe Geometry'].Arguments.set_state({r'CappingRequired': r'No',r'InvokeShareTopology': r'Yes',r'Multizone': r'No',r'NonConformal': r'No',r'SMImprovePreferences': {r'AdvancedImprove': r'no',r'AllowDefeaturing': r'no',r'SIQualityCollapseLimit': 0.85,r'SIQualityIterations': 5,r'SIQualityMaxAngle': 80,r'SIRemoveStep': r'no',r'SIStepQualityLimit': 0,r'SIStepWidth': 0,r'ShowSMImprovePreferences': False,},r'SetupType': r'The geometry consists of both fluid and solid regions and/or voids',r'WallToInternal': r'No',})\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Describe Geometry'].UpdateChildTasks(Arguments={r'v1': True,}, SetupTypeChanged=True)\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Describe Geometry'].Execute()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Apply Share Topology'].Arguments.set_state({r'InterfaceSelect': r'Manual',})\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Apply Share Topology'].Execute()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Update Boundaries'].Execute()\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+geometry1.Edit(IsDiscoveryGeometry=True)
+fluentLauncherSettings1.SetEntityProperties(Properties=Set(EnvPath={}))
+tGridData1.SetEntityProperties(Properties=Set(RunParallel=True, NumberOfProcs=4))
+Fluent.Edit(Container=mesh1)
+setup1.SendCommand(Command='(cx-gui-do cx-activate-tab-index "NavigationPane*Frame1(TreeTab)" 0)(cx-gui-do cx-activate-tab-index "NavigationPane*Frame1(TreeTab)" 1)')
+meshComponent1.Refresh()
+setup1.SendCommand(Command="""/file/set-tui-version \"25.2\"
+Graphics driver currently in use: dx11
+(cx-gui-do cx-activate-tab-index \"NavigationPane*Frame1(TreeTab)\" 0)""")
+setup1.SendCommand(Command="(newline)")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Import Geometry'].Execute()\")")
+setup1.SendCommand(Command="(newline)")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].AddChildAndUpdate(DeferUpdate=False)\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Generate the Surface Mesh'].Execute()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Describe Geometry'].Execute()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Apply Share Topology'].Execute()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Update Boundaries'].Arguments.set_state(None)\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Update Boundaries'].Execute()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Create Regions'].Arguments.set_state(None)\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Create Regions'].Execute()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Update Regions'].Arguments.set_state(None)\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Update Regions'].Execute()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Boundary Layers'].Arguments.set_state({r'LocalPrismPreferences': {r'Continuous': r'Continuous',},})\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Boundary Layers'].AddChildAndUpdate(DeferUpdate=False)\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Generate the Volume Mesh'].Arguments.set_state({r'VolumeFill': r'polyhedra',})\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Generate the Volume Mesh'].Execute()\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame2(Task Page)*Table1*Table3(Mesh)*PushButton1(  Check)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*PopupMenuCheck*Perform Mesh Check")')
+setup1.SendCommand(Command="(newline)")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame2(Task Page)*Table1*Table3(Mesh)*PushButton2(  Quality)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*PopupMenuQuality*Evaluate Volume Quality")')
+setup1.SendCommand(Command="(newline)")
+setup1.SendCommand(Command="(cx-use-window-id 51)")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+setupComponent1 = system1.GetComponent(Name="Setup")
+setupComponent1.Refresh()
+geometry1.Exit()
+fluentLauncherSettings1.SetEntityProperties(Properties=Set(EnvPath={}))
+setup1.Edit()
+setup1.SendCommand(Command='(cx-gui-do cx-activate-tab-index "NavigationPane*Frame1(TreeTab)" 0)(cx-gui-do cx-activate-tab-index "NavigationPane*Frame1(TreeTab)" 1)')
+setup1.SendCommand(Command="""/file/set-tui-version \"25.2\"
+Graphics driver currently in use: dx11
+(cx-gui-do cx-set-list-tree-selections \"NavigationPane*Frame2*Table1*List_Tree2\" (list \"Setup|Models|Viscous (SST k-omega)\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*Frame2*Table1*List_Tree2\" (list \"Setup|Materials|Solid\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*Frame2*Table1*List_Tree2\" (list \"Setup|Materials|Fluid\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*Frame2*Table1*List_Tree2\" (list \"Setup|Materials|Fluid|air\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*Frame2*Table1*List_Tree2\" (list \"Setup|Materials|Fluid\"))""")
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Materials|Fluid"))(cx-gui-do cx-activate-item "NavigationPane*Frame2*Table1*List_Tree2")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Materials|Fluid"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Materials|Fluid|air"))')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Materials|Fluid|air"))(cx-gui-do cx-activate-item "NavigationPane*Frame2*Table1*List_Tree2")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Materials|Fluid|air"))')
+setup1.SendCommand(Command="(cx-gui-do cx-activate-item \"Create/Edit Materials*Table1*Frame1*Frame2*ButtonBox2*PushButton1(Fluent Database)\")(cx-gui-do cx-set-list-selections \"Fluent Database Materials*Table1*Frame1*List1(Materials)\" '( 573))(cx-gui-do cx-activate-item \"Fluent Database Materials*Table1*Frame1*List1(Materials)\")(cx-gui-do cx-set-list-selections \"Fluent Database Materials*Table1*Frame1*List1(Materials)\" '( 573 574))(cx-gui-do cx-activate-item \"Fluent Database Materials*Table1*Frame1*List1(Materials)\")(cx-gui-do cx-set-list-selections \"Fluent Database Materials*Table1*Frame1*List1(Materials)\" '( 573))(cx-gui-do cx-activate-item \"Fluent Database Materials*Table1*Frame1*List1(Materials)\")(cx-gui-do cx-set-list-selections \"Fluent Database Materials*Table1*Frame1*List1(Materials)\" '())(cx-gui-do cx-activate-item \"Fluent Database Materials*Table1*Frame1*List1(Materials)\")(cx-gui-do cx-set-list-selections \"Fluent Database Materials*Table1*Frame1*List1(Materials)\" '( 574))(cx-gui-do cx-activate-item \"Fluent Database Materials*Table1*Frame1*List1(Materials)\")(cx-gui-do cx-activate-item \"Fluent Database Materials*PanelButtons*PushButton6(Copy)\")(cx-gui-do cx-activate-item \"Fluent Database Materials*PanelButtons*PushButton1(Close)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Create/Edit Materials*PanelButtons*PushButton1(Close)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list ))(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Motion Definitions"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Cell Zone Conditions|Fluid"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Cell Zone Conditions|Fluid|fluid (fluid, id=430)"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Cell Zone Conditions|Fluid|fluid (fluid, id=430)"))')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Cell Zone Conditions|Fluid|fluid (fluid, id=430)"))(cx-gui-do cx-activate-item "NavigationPane*Frame2*Table1*List_Tree2")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*Frame2*Table1*List_Tree2\" (list \"Setup|Cell Zone Conditions|Fluid|fluid (fluid, id=430)\"))(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 0)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 1)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 0)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 2)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 0)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 2)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 0)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 3)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 0)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 4)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 0)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 5)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 0)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 6)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 0)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 7)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 0)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 8)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 0)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 9)(cx-gui-do cx-activate-tab-index \"Fluid*Frame2*Table3*Frame1\" 0)(cx-gui-do cx-set-list-selections \"Fluid*Frame2*Table1*Table1*DropDownList1(Material Name)\" '( 0))(cx-gui-do cx-enable-apply-button \"Fluid\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Fluid*Frame2*Table1*Table1*DropDownList1(Material Name)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Fluid*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Fluid*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Materials|Fluid|air"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Materials|Fluid|air"))(cx-gui-do cx-list-tree-right-click "NavigationPane*Frame2*Table1*List_Tree2" )')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*PopupMenuTree-air*Delete")(cx-gui-do cx-activate-item "Question*OK")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list ))(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Solution|Methods"))')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton3(Check)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Cell Zone Conditions|Fluid|fluid (fluid, id=430)"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Cell Zone Conditions|Fluid|fluid (fluid, id=430)"))')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Cell Zone Conditions|Fluid|fluid (fluid, id=430)"))(cx-gui-do cx-activate-item "NavigationPane*Frame2*Table1*List_Tree2")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Cell Zone Conditions|Fluid|fluid (fluid, id=430)"))(cx-gui-do cx-activate-item "Fluid*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Boundary Conditions|Inlet|inlet:1 (velocity-inlet, id=19)"))')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Boundary Conditions|Inlet|inlet:1 (velocity-inlet, id=19)"))(cx-gui-do cx-activate-item "NavigationPane*Frame2*Table1*List_Tree2")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*Frame2*Table1*List_Tree2\" (list \"Setup|Boundary Conditions|Inlet|inlet:1 (velocity-inlet, id=19)\"))(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 0)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 1)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 0)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 2)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 0)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 3)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 0)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 4)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 0)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 5)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 0)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 6)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 0)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 7)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 0)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 8)(cx-gui-do cx-activate-tab-index \"Velocity Inlet*Frame2*Frame2\" 0)(cx-gui-do cx-enable-apply-button \"Velocity Inlet\")(cx-gui-do cx-set-expression-entry \"Velocity Inlet*Frame2*Frame2*Frame1(Momentum)*Table1*Table9*ExpressionEntry1(Velocity Magnitude)\" '(\"100\" . 0))(cx-gui-do cx-set-expression-entry \"Velocity Inlet*Frame2*Frame2*Frame1(Momentum)*Table1*Table15*ExpressionEntry1(Supersonic/Initial Gauge Pressure)\" '(\"10\" . 0))(cx-gui-do cx-activate-item \"Velocity Inlet*PanelButtons*PushButton1(OK)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Velocity Inlet*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Boundary Conditions|Inlet|inlet:1 (velocity-inlet, id=19)"))')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Boundary Conditions|Inlet|inlet:1 (velocity-inlet, id=19)"))(cx-gui-do cx-activate-item "NavigationPane*Frame2*Table1*List_Tree2")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*Frame2*Table1*List_Tree2" (list "Setup|Boundary Conditions|Inlet|inlet:1 (velocity-inlet, id=19)"))(cx-gui-do cx-activate-item "Velocity Inlet*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Velocity Inlet*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-integer-entry "Ribbon*Frame1*Frame5(Solution)*Table1*Table3(Run Calculation)*Table6*IntegerEntry16(No  of Iterations)" 100)(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame5(Solution)*Table1*Table3(Run Calculation)*Table6*IntegerEntry16(No  of Iterations)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame5(Solution)*Table1*Table3(Run Calculation)*PushButton1(Input Summary)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*PopupMenuInput Summary*List Modified Settings")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame5(Solution)*Table1*Table3(Run Calculation)*PushButton8(Calculate)")(cx-gui-do cx-activate-item "Question*Cancel")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame5(Solution)*Table1*Table3(Initialization)*PushButton6(Initialize)")')
+setup1.SendCommand(Command='(cx-use-window-id 51)(handle-key "control s")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame5(Solution)*Table1*Table3(Run Calculation)*PushButton8(Calculate)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Information*OK")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame6(Results)*Table1*Table3(Graphics)*PushButton4(Pathlines)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*PopupMenuPathlines*New...")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pathlines*Frame4*Table1*DropDownList2\" '( 1))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Pathlines*Frame4*Table1*DropDownList2")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pathlines*Frame4*List3(Release from Surfaces)\" '( 2))(cx-gui-do cx-activate-item \"Pathlines*Frame4*List3(Release from Surfaces)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Pathlines*PanelButtons*PushButton6(Compute)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Pathlines*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame6(Results)*Table1*Table3(Plots)*PushButton1(XY Plot)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame6(Results)*Table1*Table3(Plots)*PushButton1(XY Plot)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Pathlines*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame6(Results)*Table1*Table3(Graphics)*PushButton2(Contours)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame6(Results)*Table1*Table3(Graphics)*PushButton2(Contours)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame6(Results)*Table1*Table3(Graphics)*PushButton2(Contours)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*PopupMenuContours*New...")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Contours*Table1*Frame3*Table1*DropDownList2\" '( 4))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Contours*Table1*Frame3*Table1*DropDownList2")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\" '( 2))(cx-gui-do cx-activate-item \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\")(cx-gui-do cx-set-list-selections \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\" '( 2 3))(cx-gui-do cx-activate-item \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\")(cx-gui-do cx-set-list-selections \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\" '( 2 3 4))(cx-gui-do cx-activate-item \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\")(cx-gui-do cx-set-list-selections \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\" '( 2 3))(cx-gui-do cx-activate-item \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\")(cx-gui-do cx-set-list-selections \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\" '( 2 3 5))(cx-gui-do cx-activate-item \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\")(cx-gui-do cx-set-list-selections \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\" '( 2 3 4 5))(cx-gui-do cx-activate-item \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\")(cx-gui-do cx-activate-item \"Contours*PanelButtons*PushButton1(OK)\")")
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\" '( 0 2 3 4 5))(cx-gui-do cx-activate-item \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\")(cx-gui-do cx-set-list-selections \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\" '( 0 1 2 3 4 5))(cx-gui-do cx-activate-item \"Contours*Table1*Frame3*Frame2*List2(Surfaces)\")(cx-gui-do cx-activate-item \"Contours*PanelButtons*PushButton1(OK)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Contours*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")(cx-gui-do cx-activate-item "Settings have changed!*PanelButtons*PushButton1(OK)")')
+results1 = system1.GetContainer(ComponentName="Results")
+results1.Edit()
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 2.71201e-06, -1.28453e-06, -0.02467
+    Scale = 48.2293
+    Pan = 0, 0
+    Rotation Quaternion = 0.279848, -0.364705, -0.115917, 0.880476
+    
+  END
+
+END
+
+> update
+# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case FFF/BOUNDARY:fluid solid, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case FFF/BOUNDARY:inlet 1, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case FFF/BOUNDARY:outlet, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case FFF/BOUNDARY:fluid solid shadow, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case FFF/BOUNDARY:pipe, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /DATA READER/CASE:Case FFF/BOUNDARY:solid 173, view=/VIEW:View 1""")
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 2.71201e-06, -1.28453e-06, -0.02467
+    Scale = 45.9053
+    Pan = 0, 0
+    Rotation Quaternion = 0.279848, -0.364705, -0.115917, 0.880476
+    
+  END
+
+END
+
+> update
+> report showItem=/REPORT/SOLUTION SUMMARY OPTIONS""")
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 2.71201e-06, -1.28453e-06, -0.02467
+    Scale = 45.9053
+    Pan = 0, 0
+    Rotation Quaternion = 0.283851, -0.456124, -0.149515, 0.830075
+    
+  END
+
+END
+
+> update
+>report save, format=preview""")
+results1.SendCommand(Command="""CALCULATOR:
+  Function = area
+  Location = 
+  Case Name = Case FFF
+END""")
+results1.Exit()
+Save(Overwrite=True)
+Reset()
+Extensions.UnloadExtension(
+    Id="5e7e01a6-8601-11e8-9f8c-28f10e13ffe6",
+    Version="2025.2",
+    Format="Binary")
+Extensions.UnloadExtension(
+    Id="5f463412-bd3e-484b-87e7-cbc0a665e474",
+    Version="2025.2",
+    Format="Binary")
+Extensions.UnloadExtension(
+    Id="ba012e44-4f35-4a97-aeff-8fe60efc33c9",
+    Version="25.2",
+    Format="Binary")
+Extensions.UnloadExtension(
+    Id="7b0e9e84-396d-4099-9602-2ced9dddc253",
+    Version="2025.2",
+    Format="Binary")
+Extensions.UnloadExtension(
+    Id="20180725-3f81-49eb-9f31-41364844c769",
+    Version="2025.2",
+    Format="Binary")
+Extensions.UnloadExtension(
+    Id="f3e3da52-fb02-4910-8cc9-980efd047bc6",
+    Version="2023.1",
+    Format="Binary")

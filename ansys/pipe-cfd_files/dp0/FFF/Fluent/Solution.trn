@@ -1,0 +1,40 @@
+Transcript Start Time:  05:16:12, 26 Jan 2026 India Standard Time 
+Current Directory: "C:\Users\vratnam"
+
+Build Time: Jun 16 2025 10:54:33 EDT 
+Executable Path: C:/PROGRA~1/ANSYSI~1/ANSYSS~1/v252/fluent/ntbin/win64/fluent.exe
+
+----------------------------------------------------------------------------------
+ID    Hostname         Core  O.S.         PID    Vendor                           
+----------------------------------------------------------------------------------
+n3    WINAA5CG1075ZD1  4/8  Windows-x64  20160  Intel(R) Core(TM) i7-10610U      
+n2    WINAA5CG1075ZD1  3/8  Windows-x64  11548  Intel(R) Core(TM) i7-10610U      
+n1    WINAA5CG1075ZD1  2/8  Windows-x64  19544  Intel(R) Core(TM) i7-10610U      
+n0*   WINAA5CG1075ZD1  1/8  Windows-x64  15432  Intel(R) Core(TM) i7-10610U      
+host  WINAA5CG1075ZD1       Windows-x64  19576  Intel(R) Core(TM) i7-10610U      
+
+MPI Option Selected: intel
+Selected system interconnect: default
+----------------------------------------------------------------------------------
+
+Cortex Process ID: 22268 
+License Server Path: () 
+Reading "C:\Users\vratnam\AppData\Local\Temp\WB_vratnam_12700_3\wbnew_files\dp0\FFF\Fluent\FFF.7.msh.h5" ...
+3D mesh
+nodes: 0
+edges: 0
+faces: 0 
+cells: 0 
+reading 0 node zones
+reading 0 edge zones
+reading 0 face zones
+
+Warning: no nodes readanalyzing boundary connectivity...done.
+Fast-loading "C:\PROGRA~1\ANSYSI~1\ANSYSS~1\v252\fluent\fluent25.2.0\\addons\afd\lib\hdfio.bin"
+Done.
+Writing "C:\Users\vratnam\AppData\Local\Temp\WB_vratnam_12700_3\wbnew_files\dp0\FFF\Fluent\FFF.msh.h5" ...
+writing 0 node zones
+writing 0 edge zones 
+writing 0 face zones 
+done.Transcript Stop Time:  05:16:20, 26 Jan 2026 India Standard Time 
+Total Transcript Time: 0 Minute 8 Second.
