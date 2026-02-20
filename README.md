@@ -20,5 +20,4 @@ This repository collects CFD-related Jupyter notebooks and ANSYS project files u
 | `ansys/pipe-with-bend.dsco_files/` | Generated project files for the `pipe-with-bend` case. |
 | `ansys/pipe-with-thinkness_files/` | Generated project files for the `pipe-with-thinkness` case. |
 
-
-<img src="./ansys/pipe-contraction.png" alt="Description" width="900" height="500">
+![](.//ansys/pipe-contraction.png)
