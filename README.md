@@ -1,15 +1,16 @@
 # CFD Notebook Repository
 
-This repository collects CFD-related Jupyter notebooks and ANSYS project files used for study and experiments.
+This repository collects CFD-related Jupyter notebooks and ANSYS project files for various concepts.
 
 **Notebooks**
 
 | Notebook | Description |
 |---|---|
-| `1d-convective-heat-transfer.ipynb` | Examples and notes on 1D convective heat transfer problems. |
-| `1d-heat-diffusion.ipynb` | 1D heat diffusion (conduction) theory and numerical solutions. |
-| `fluid_kinematics.ipynb` | Fundamentals of fluid kinematics: velocity fields, deformation, and strain rates. |
-| `unsteady_couette_flow.ipynb` | Transient (unsteady) Couette flow analysis and example solutions. |
+| `1d-convective-heat-transfer.ipynb` | Derivations and worked numerical examples for 1D convective heat transfer. |
+| `1d-heat-diffusion.ipynb` | Theory and numerical experiments for 1D heat conduction (finite-difference examples). |
+| `fluid_kinematics.ipynb` | Core concepts with visualizations: velocity fields, deformation, and strain rates. |
+| `unsteady_couette_flow.ipynb` | Transient Couette flow: analytical solutions and time-dependent simulations. |
+| `1d_convection_diffusion.ipynb` | Numerical methods and examples for 1D convection–diffusion equations. |
 
 **`ansys/`** — ANSYS project and design archives. First-level folders (projects) inside `ansys/`:
 
