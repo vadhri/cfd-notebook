@@ -1,0 +1,12 @@
+﻿# 
+# This file contains the parameter values of the Design Points successfully updated by Ansys Workbench.
+# Project name: manifold
+# Creation date: 02/25/2026 13:33:15
+# 
+# 02/25/2026 13:33:15
+# The parameters defined in the project are:
+# ,P1 - Plane5.D1 [in],P2 - Plane5.D7 [in],P3 - Plane5.D8 [in],P4 - Plane5.L10 [in],P5 - Plane5.L9 [in],P6 - Plane5.L2 [in],P7 - Plane5.L3 [in],P8 - Plane5.L4 [in],P9 - Plane5.L5 [in]
+# 
+# The following header line defines the name of the columns by reference to the parameters.
+Name,P1,P2,P3,P4,P5,P6,P7,P8,P9
+DP 0,0.25,0.25,0.25,0.25,0.74999999999999989,0.6,0.25,0.25,0.74999999999999989

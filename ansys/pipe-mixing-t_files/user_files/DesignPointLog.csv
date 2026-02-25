@@ -1,0 +1,12 @@
+﻿# 
+# This file contains the parameter values of the Design Points successfully updated by Ansys Workbench.
+# Project name: pipe-mixing-t
+# Creation date: 02/25/2026 10:03:42
+# 
+# 02/25/2026 10:03:42
+# The parameters defined in the project are:
+# ,P1 - Mesh Growth Rate
+# 
+# The following header line defines the name of the columns by reference to the parameters.
+Name,P1
+DP 0,0
