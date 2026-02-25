@@ -22,3 +22,4 @@ This repository collects CFD-related Jupyter notebooks and ANSYS project files f
 | `ansys/pipe-with-thinkness_files/` | Generated project files for the `pipe-with-thinkness` case. |
 
 ![](.//ansys/pipe-contraction.png)
+![](.//ansys/manifold-design.png)
