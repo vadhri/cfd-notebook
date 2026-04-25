@@ -41,16 +41,12 @@ This repository collects CFD-related Jupyter notebooks and ANSYS project files f
 **Demos**
 
 **Contour Animation** — Scalar field evolution:
-<video width="500" controls>
-  <source src="iisc/contour-animation.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+
+[contour-animation.mp4](iisc/contour-animation.mp4)
 
 **Vector Animation** — Velocity/gradient field dynamics:
-<video width="500" controls>
-  <source src="iisc/vector-animation.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+
+[vector-animation.mp4](iisc/vector-animation.mp4)
 
 ![](.//ansys/pipe-contraction.png)
 ![](.//ansys/manifold-design.png)
