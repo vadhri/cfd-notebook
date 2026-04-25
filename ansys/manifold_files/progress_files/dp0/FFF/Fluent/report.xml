@@ -1,7 +1,7 @@
 <FluentXMLReport>
 <version>
 Fluent
-Version: 3d, pbns, lam (3d, pressure-based, laminar)
+Version: 3d, pbns, rke (3d, pressure-based, realizable k-epsilon)
 Release: 25.2.0
 Title: 
 </version>
@@ -11,24 +11,26 @@ Title:
 Models
 ------
 
-   Model                        Settings   
-   -------------------------------------
-   Space                        3D         
-   Time                         Steady     
-   Viscous                      Laminar    
-   Heat Transfer                Disabled   
-   Solidification and Melting   Disabled   
-   Species                      Disabled   
-   Coupled Dispersed Phase      Disabled   
-   NOx Pollutants               Disabled   
-   SOx Pollutants               Disabled   
-   Soot                         Disabled   
-   Mercury Pollutants           Disabled   
-   Structure                    Disabled   
-   Acoustics                    Disabled   
-   Eulerian Wall Film           Disabled   
-   Potential/Electrochemistry   Disabled   
-   Multiphase                   Disabled   
+   Model                        Settings                                
+   ------------------------------------------------------------------
+   Space                        3D                                      
+   Time                         Steady                                  
+   Viscous                      Realizable k-epsilon turbulence model   
+   Wall Treatment               Enhanced Wall Treatment                 
+   Heat Transfer                Enabled                                 
+   Solidification and Melting   Disabled                                
+   Radiation                    None                                    
+   Species                      Disabled                                
+   Coupled Dispersed Phase      Disabled                                
+   NOx Pollutants               Disabled                                
+   SOx Pollutants               Disabled                                
+   Soot                         Disabled                                
+   Mercury Pollutants           Disabled                                
+   Structure                    Disabled                                
+   Acoustics                    Disabled                                
+   Eulerian Wall Film           Disabled                                
+   Potential/Electrochemistry   Disabled                                
+   Multiphase                   Disabled                                
 
 </Models>
 
@@ -36,25 +38,22 @@ Models
 Material Properties
 -------------------
 
-   Material: water-liquid (fluid)
-
-      Property    Units      Method     Value(s)   
-      ------------------------------------------
-      Density     kg/m^3     constant   998.2      
-      Viscosity   kg/(m s)   constant   0.001003   
-
    Material: air (fluid)
 
-      Property    Units      Method     Value(s)     
-      --------------------------------------------
-      Density     kg/m^3     constant   1.225        
-      Viscosity   kg/(m s)   constant   1.7894e-05   
+      Property               Units      Method     Value(s)     
+      -------------------------------------------------------
+      Density                kg/m^3     constant   1.225        
+      Cp (Specific Heat)     J/(kg K)   constant   1006.43      
+      Thermal Conductivity   W/(m K)    constant   0.0242       
+      Viscosity              kg/(m s)   constant   1.7894e-05   
 
    Material: aluminum (solid)
 
-      Property   Units    Method     Value(s)   
-      ---------------------------------------
-      Density    kg/m^3   constant   2719       
+      Property               Units      Method     Value(s)   
+      -----------------------------------------------------
+      Density                kg/m^3     constant   2719       
+      Cp (Specific Heat)     J/(kg K)   constant   871        
+      Thermal Conductivity   W/(m K)    constant   202.4      
 
 </MaterialProperties>
 
@@ -64,19 +63,19 @@ Cell Zone Conditions
 
    Zones
 
-      name        id   type    material       
-      -------------------------------------
-      fff_solid   3    fluid   water-liquid   
+      name        id   type    material   
+      ---------------------------------
+      fff_solid   3    fluid   air        
 
    Setup Conditions
 
       fff_solid
 
-         Condition       Value          
-         ----------------------------
-         Material Name   water-liquid   
-         Frame Motion?   no             
-         Mesh Motion?    no             
+         Condition       Value   
+         ---------------------
+         Material Name   air     
+         Frame Motion?   no      
+         Mesh Motion?    no      
 
 </CellZoneConditions>
 
@@ -100,15 +99,17 @@ Boundary Conditions
 
          Condition                  Value             
          ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
          Wall Motion                Stationary Wall   
          Shear Boundary Condition   No Slip           
 
       inlet
 
-         Condition                                Value   
-         ----------------------------------------------
-         Velocity Magnitude [m/s]                 10      
-         Supersonic/Initial Gauge Pressure [Pa]   10      
+         Condition                  Value    
+         ---------------------------------
+         Velocity Magnitude [m/s]   0.7022   
+         Temperature [C]            15       
 
       outlet_1
 
@@ -133,9 +134,11 @@ Solver Settings
 
    Equations
 
-      Equation   Solved   
-      -----------------
-      Flow       yes      
+      Equation     Solved   
+      -------------------
+      Flow         yes      
+      Turbulence   yes      
+      Energy       yes      
 
    Numerics
 
@@ -143,43 +146,58 @@ Solver Settings
       ---------------------------------------
       Absolute Velocity Formulation   yes       
 
-   Pseudo Time Explicit Relaxation Factors
+   Under-Relaxation Factors
 
-      Variable            Relaxation Factor   
-      -------------------------------------
-      Density             1                   
-      Body Forces         1                   
-      Explicit Momentum   0.5                 
-      Explicit Pressure   0.5                 
+      Variable                     Relaxation Factor   
+      ----------------------------------------------
+      Pressure                     0.3                 
+      Density                      1                   
+      Body Forces                  1                   
+      Momentum                     0.7                 
+      Turbulent Kinetic Energy     0.8                 
+      Turbulent Dissipation Rate   0.8                 
+      Turbulent Viscosity          1                   
+      Energy                       1                   
 
    Linear Solver
 
-      Variable   Solver Type   Termination Criterion   Residual Reduction Tolerance   
-      -----------------------------------------------------------------------------
-      Flow       F-Cycle       0.1                                                    
+      Variable                     Solver Type   Termination Criterion   Residual Reduction Tolerance   
+      -----------------------------------------------------------------------------------------------
+      Pressure                     V-Cycle       0.1                                                    
+      X-Momentum                   Flexible      0.1                     0.7                            
+      Y-Momentum                   Flexible      0.1                     0.7                            
+      Z-Momentum                   Flexible      0.1                     0.7                            
+      Turbulent Kinetic Energy     Flexible      0.1                     0.7                            
+      Turbulent Dissipation Rate   Flexible      0.1                     0.7                            
+      Energy                       F-Cycle       0.1                                                    
 
    Pressure-Velocity Coupling
 
-      Parameter                               Value     
-      -----------------------------------------------
-      Type                                    Coupled   
-      Pseudo Time Method (Global Time Step)   yes       
+      Parameter   Value    
+      ------------------
+      Type        SIMPLE   
 
    Discretization Scheme
 
-      Variable   Scheme                
-      ------------------------------
-      Pressure   Second Order          
-      Momentum   Second Order Upwind   
+      Variable                     Scheme               
+      -----------------------------------------------
+      Pressure                     Second Order         
+      Momentum                     First Order Upwind   
+      Turbulent Kinetic Energy     First Order Upwind   
+      Turbulent Dissipation Rate   First Order Upwind   
+      Energy                       First Order Upwind   
 
    Solution Limits
 
-      Quantity                         Limit   
-      --------------------------------------
-      Minimum Absolute Pressure [Pa]   1       
-      Maximum Absolute Pressure [Pa]   5e+10   
-      Minimum Static Temperature [K]   1       
-      Maximum Static Temperature [K]   5000    
+      Quantity                                   Limit     
+      --------------------------------------------------
+      Minimum Absolute Pressure [Pa]             1         
+      Maximum Absolute Pressure [Pa]             5e+10     
+      Minimum Static Temperature [C]             -272.15   
+      Maximum Static Temperature [C]             4726.85   
+      Minimum Turb. Kinetic Energy [m^2/s^2]     1e-14     
+      Minimum Turb. Dissipation Rate [m^2/s^3]   1e-20     
+      Maximum Turb. Viscosity Ratio              100000    
 
 </SolverSettings>
 

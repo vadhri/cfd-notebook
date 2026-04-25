@@ -1,0 +1,25 @@
+Starting a new Nexus server instance
+Beginning migration setup
+Migrating the database...
+Migrating 3D geometry...
+New version of the 3D geometry engine detected ('unknown' vs '25.20R1')
+Converting existing 3D geometry to new version...
+3D Geometry conversion complete.
+Migration complete.
+Collecting static files...
+Static files collection failed with the error:
+[WinError 5] Access is denied: 'C:\\Program Files\\ANSYS Inc\\ANSYS Student\\v252\\CEI\\nexus252\\django\\static\\utils\\remote\\adr_offline_report_src'
+Static files collection output:
+Building new nginx config file: C:\Users\vratnam\cfd-notebook\ansys\transient-flow-modelling_files\dp0\FLU\Fluent\FluentReportServer\nginx\nexus.conf
+Launching Nexus server on port: 24752
+Launching Nginx server on port: 25044
+Nginx running as process id: 24372
+Verbose output mode enabled.
+Monitoring the Nexus server...
+127.0.0.1 - nexus [25/Apr/2026:11:10:47 +0530] "GET /item/api_version/ HTTP/1.1" 200 79 "-" "python-requests/2.31.0"
+127.0.0.1 - nexus [25/Apr/2026:11:10:49 +0530] "GET /item/api_version/ HTTP/1.1" 200 79 "-" "python-requests/2.31.0"
+127.0.0.1 - nexus [25/Apr/2026:11:10:50 +0530] "GET /item/api_version/ HTTP/1.1" 200 79 "-" "python-requests/2.31.0"
+127.0.0.1 - nexus [25/Apr/2026:11:10:51 +0530] "PUT /session/api_detail/5154bd40-4069-11f1-8946-e02be9038855?version=1.0 HTTP/1.1" 200 179 "-" "python-requests/2.31.0"
+127.0.0.1 - nexus [25/Apr/2026:11:10:55 +0530] "PUT /dataset/api_detail/53f24e5c-4069-11f1-857b-e02be9038855?version=1.0 HTTP/1.1" 200 131 "-" "python-requests/2.31.0"
+Shutting down the server. Child processes stopped.
+Shutting down the server.

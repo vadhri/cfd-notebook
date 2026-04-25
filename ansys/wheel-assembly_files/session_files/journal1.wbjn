@@ -1498,3 +1498,6 @@ setup1.SendCommand(Command="(cx-use-window-id 51)(cx-use-window-id 51)(cx-use-wi
 setup1.SendCommand(Command="(cx-use-window-id 51)")
 setup1.SendCommand(Command='(cx-gui-do cx-activate-item "ToolBar*Copy*savepicture")')
 setup1.SendCommand(Command="(cx-gui-do cx-activate-item \"Save Picture*PanelButtons*PushButton1(OK)\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"manifold-design.png\") \"Hardcopy Files (*.png)\")(cx-gui-do cx-activate-item \"Question*OK\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Save Picture*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")(cx-gui-do cx-activate-item "Settings have changed!*PanelButtons*PushButton1(OK)")')
+Save(Overwrite=True)

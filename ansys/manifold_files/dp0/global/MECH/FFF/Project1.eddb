@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<ANSYS_EnggData>
+	<ParameterData/>
+	<MaterialData>
+		  <Sources/>
+		  <MatML_Doc/>
+	</MaterialData>
+	<ConvectionData>
+		  <Sources/>
+		  <MatML_Doc/>
+	</ConvectionData>
+  <LoadVariationData>
+    <Sources/>
+    <MatML_Doc/>
+  </LoadVariationData>
+
+  <BeamSectionData>
+    <Sources/>
+    <MatML_Doc/>
+  </BeamSectionData>
+
+</ANSYS_EnggData>
