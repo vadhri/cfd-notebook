@@ -30,9 +30,6 @@ This repository collects CFD-related Jupyter notebooks and ANSYS project files f
 | `ansys/Turbulence_files/` | Generated project files for turbulence modelling. |
 | `ansys/wheel-assembly_files/` | Generated project files for the wheel assembly case. |
 
-![](.//ansys/pipe-contraction.png)
-![](.//ansys/manifold-design.png)
-
 **`differencing_schemes/`** — Numerical discretization schemes for CFD:
 
 | Notebook | Description |
@@ -54,3 +51,6 @@ This repository collects CFD-related Jupyter notebooks and ANSYS project files f
   <source src="iisc/vector-animation.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
+
+![](.//ansys/pipe-contraction.png)
+![](.//ansys/manifold-design.png)
