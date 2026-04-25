@@ -45,12 +45,12 @@ This repository collects CFD-related Jupyter notebooks and ANSYS project files f
 
 **Contour Animation** — Scalar field evolution:
 <video width="500" controls>
-  <source src="iisc/contour-animation.mpeg" type="video/mp4">
+  <source src="iisc/contour-animation.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
 **Vector Animation** — Velocity/gradient field dynamics:
 <video width="500" controls>
-  <source src="iisc/vector-animation.mpeg" type="video/mp4">
+  <source src="iisc/vector-animation.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
