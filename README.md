@@ -41,8 +41,7 @@ This repository collects CFD-related Jupyter notebooks and ANSYS project files f
 **Demos**
 
 **Contour Animation** — Scalar field evolution:
-
-![](https://github.com/vadhri/cfd-notebook/raw/refs/heads/main/iisc/contour-animation.mp4)
+https://rawcdn.githack.com/vadhri/cfd-notebook/refs/heads/main/iisc/contour-animation.mp4
 
 **Vector Animation** — Velocity/gradient field dynamics:
 
